@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../data/helpers/projectModel");
 
 //Get Request
-router.use("/api/project", (req, res, next) => {
+router.get("/api/project", (req, res, next) => {
   db.get(req.params.id)
     .then((user) => {
       res.status(200).json(user);
@@ -12,7 +12,7 @@ router.use("/api/project", (req, res, next) => {
 });
 
 //Get Request By ID
-router.use("/api/project/:id", (req, res, next) => {
+router.get("/api/project/:id", (req, res, next) => {
   db.get(req.params.id)
     .then((user) => {
       res.status(200).json(user);
@@ -22,7 +22,7 @@ router.use("/api/project/:id", (req, res, next) => {
 
 //Insert or Post request
 
-router.use("/api/project/:id", (req, res) => {
+router.post("/api/project/:id", (req, res) => {
   if (!req.body.name || !req.body.description) {
     return res.status(400).json({
       message: "Please Provide infromation ",
@@ -45,14 +45,14 @@ router.use("/api/project/:id", (req, res) => {
 
 //Update or Put Request
 
-router.put("api/users/:id", (req, res) => {
+router.put("/api/project/:id", (req, res) => {
   if (req.body.description === "" || req.body.names === "") {
     return res.status(400).json({
       errorMessage: "Please provide description or names",
     });
   }
 
-  db.update(req.params.id, req.body.names, req.body.des)
+  db.update(req.params.id, req.body)
     .then((post) => {
       if (post) {
         res.status(200).json(post);
@@ -93,7 +93,7 @@ router.delete("/api/project/:id", (req, res) => {
 });
 
 //Get project Actions
-router.get("/api/posts", (req, res) => {
+router.get("/api/project/:id", (req, res) => {
   db.getProjectActions(req.params.id)
     .then((data) => {
       name: req.body.name;
